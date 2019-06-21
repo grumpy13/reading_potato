@@ -4,5 +4,9 @@
     <h1>{{article.title}}</h1>
     <h6>{{article.author}}</h6>
     <p>{{article.content}}</p>
-    <a href="{% url 'main:edit-article' article.id %}">Edit</a>
+    {% if request.user == article.author %}
+    	<a href="{% url 'main:edit-article' article.id %}">Edit</a>
+    {% elif request.user.is_authenticated %}
+        <a href="{% url 'main:contribute-to-article' article.id %}">Contribute</a>
+    {% endif %}
 {% endblock content%}
