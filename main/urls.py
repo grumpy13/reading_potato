@@ -10,4 +10,9 @@ urlpatterns = [
     path('edit/<int:article_id>', views.edit_article, name="edit-article"),
     path('my-articles/', views.my_articles_list, name="my-articles-list"),
     path('contribute/<article_id>/', views.contribute_to_article, name="contribute-to-article"),
+    path('my-contributions/', views.my_contributions_list, name="my-contributions-list"),
+    path('contributions/', views.contributions_list, name="contributions-list"),
+    path('contributions/<int:contribution_id>/', views.contribution_details, name="contribution-details"),
+    path('accept/<int:contribution_id>/', views.accept_changes, name="accept-changes"),
+    path('decline/<int:contribution_id>/', views.decline_changes, name="decline-changes"),
 ]

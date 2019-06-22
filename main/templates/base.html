@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'colors.css' %}">
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -15,6 +17,8 @@
                     <a class="nav-link" href="{% url 'auth:signout' %}">Logout</a>
                     <a class="nav-link" href="{% url 'main:create-article' %}">Create</a>
                     <a class="nav-link" href="{% url 'main:my-articles-list' %}">My Articles</a>
+                    <a class="nav-link" href="{% url 'main:my-contributions-list' %}">My Contributions</a>
+                    <a class="nav-link" href="{% url 'main:contributions-list' %}">Contributions</a>
                 {% else %}
                     <a class="nav-link" href="{% url 'auth:signin' %}">Login</a>
                     <a class="nav-link" href="{% url 'auth:register' %}">Register</a>    
