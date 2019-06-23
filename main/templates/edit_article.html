@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <form action="{% url 'main:edit-article' article.id %}" method="POST">
+    <form action="{% url 'main:edit-article' article.slug %}" method="POST">
         {% csrf_token %}
         {{form|crispy}}
         <input type="submit" value="Edit">

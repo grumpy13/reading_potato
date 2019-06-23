@@ -15,22 +15,22 @@ def articles_list(request):
 	page_number = request.GET.get('page')
 
 	try:
-		objects = paginator.page(page_number)
+		articles = paginator.page(page_number)
 	except PageNotAnInteger:
 		# If page is not an integer, deliver first page.
-		objects = paginator.page(1)
+		articles = paginator.page(1)
 	except EmptyPage:
 		# If page is out of range (e.g. 9999), deliver last page of results.
-		objects = paginator.page(paginator.num_pages)
+		articles = paginator.page(paginator.num_pages)
 
 	context = {
-		"articles" : objects,
+		"articles" : articles,
 	}
 	return render(request, "articles_list.html", context)
 
-def article_details(request, article_id):
+def article_details(request, article_slug):
 	context = { 
-		"article" : Article.objects.get(id=article_id)
+		"article" : Article.objects.get(slug=article_slug)
 	}
 	return render(request, "article_details.html", context)
 
@@ -52,11 +52,11 @@ def create_article(request):
 	}
 	return render(request, "create_article.html", context)
 
-def edit_article(request, article_id):
-	article = Article.objects.get(id=article_id)
+def edit_article(request, article_slug):
+	article = Article.objects.get(slug=article_slug)
 
 	if article.author != request.user:
-		return redirect('main:article-details', article_id)
+		return redirect('main:article-details', article_slug)
 
 	form = ArticleForm(instance=article)
 	if request.method == "POST":
@@ -64,7 +64,7 @@ def edit_article(request, article_id):
 
 		if form.is_valid():
 			form.save()
-			return redirect('main:article-details', article_id)
+			return redirect('main:article-details', article_slug)
 
 	context = {
 		"form" : form,              
@@ -75,14 +75,14 @@ def edit_article(request, article_id):
 def my_articles_list(request):
 	return render(request, "my_articles_list.html")
 
-def contribute_to_article(request, article_id):
+def contribute_to_article(request, article_slug):
 	if request.user.is_anonymous:
 		return redirect('auth:signin')
 		
-	article = Article.objects.get(id=article_id)
+	article = Article.objects.get(slug=article_slug)
 	
 	if article.author == request.user:
-		return redirect('main:edit-article', article_id)
+		return redirect('main:edit-article', article_slug)
 
 	form = ContributeArticleForm(instance=article)
 	if request.method == "POST":
